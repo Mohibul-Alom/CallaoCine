@@ -16,7 +16,7 @@ router.get('/',(req,res) => {
     res.send("Hola")
 });
 
-//para controlar los errores
+//para controlar paginas que no existe
 app.use('*',(req,res,next) => {
     const error = new Error('Página no encontrada');
     return res.status(404).json(error.message);
