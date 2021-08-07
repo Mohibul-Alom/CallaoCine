@@ -1,11 +1,15 @@
+const Movies = require('../models/Movies.model');
 
-const moviesGet = (req, res,next)=>{
 
-    // res.status(200).json('Get movies')
-    const error = new Error('Error provocado');
-    error.status = 500;
+const moviesGet = async (req, res, next)=>{
 
-    next(error);
+    try{
+        const movies = await Movies.find();
+        return res.status(200).json(movies);
+
+    }catch(err){
+        next(err);
+    }
 }
 
 const moviesPost = (req, res, next)=>{
