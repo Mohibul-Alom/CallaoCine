@@ -31,7 +31,8 @@ const auditoriumPost = async (req, res, next) => {
                 name,
                 capacity,
                 sessions: new Date(sessions),
-                reservations
+                reservations,
+                movie:movie
             }
         )
 
