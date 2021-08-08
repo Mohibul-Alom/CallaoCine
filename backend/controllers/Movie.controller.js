@@ -1,4 +1,4 @@
-const Movie = require('../models/Movies.model');
+const Movies = require('../models/Movies.model');
 
 
 const moviesGet = async (req, res, next)=>{
@@ -18,7 +18,7 @@ const moviesPost = async(req, res, next)=>{
 
         const { title, director,description,duration,genere } = req.body;
         
-        const newMovie = new Movie(
+        const newMovie = new Movies(
             {
                 title, 
                 director,
@@ -70,7 +70,7 @@ const moviesDelete = async (req, res, next) => {
     
     try {
       const { id } = req.body;
-      const movieDeleted = await Movie.findByIdAndDelete(id);
+      const movieDeleted = await Movies.findByIdAndDelete(id);
 
       if (!movieDeleted) {
         return res.status(404).json("false");
@@ -86,7 +86,7 @@ const movieFindByName = async (req, res) => {
     
     try {
       const { name } = req.params;
-      const movies = await Movie.find({title:{'$regex' : name, '$options' : 'i'}})
+      const movies = await Movies.find({title:{'$regex' : name, '$options' : 'i'}})
   
       if (movies.length === 0) {
         const error = new Error("Pelicula no encontrada");
