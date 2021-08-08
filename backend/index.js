@@ -9,6 +9,7 @@ db.connect();
 //rutas
 const movieRoutes = require('./routes/Movie.routes');
 const auditoriumRoutes = require('./routes/Auditorium.routes')
+const ticketRoutes = require('./routes/Ticket.routes')
 
 
 const PORT = process.env.PORT || 3000;
@@ -22,6 +23,7 @@ app.use(express.urlencoded({extended: true}));
 app.use('/',router);
 app.use('/movies',movieRoutes);
 app.use('/auditorium',auditoriumRoutes);
+app.use('/ticket',ticketRoutes);
 
 router.get('/',(req,res) => {
     res.send("Hola")

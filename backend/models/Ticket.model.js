@@ -8,7 +8,7 @@ const ticketSchema = new Schema (
         num:{type:Number,required: true},
         timeLeft: {type: Date,required: true},
         day: {type:Date,required: true},
-        auditorium : {type:mongoose.Types.ObjectId,ref:'Movie'},
+        auditorium : {type:mongoose.Types.ObjectId,ref:'Auditoriums'},
         
     },
     {timestamps: true}
