@@ -6,7 +6,7 @@ const seatSchema = new Schema(
     {
         row:{type: String, required: true},
         number:{type: Number, required: true},
-        price:{type: Number, required: true},
+        price:{type: Number, required: true, default: 10},
         booked: {type: Boolean, required: true},
     },
     { timestamps: true }

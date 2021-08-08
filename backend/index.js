@@ -10,6 +10,7 @@ db.connect();
 const movieRoutes = require('./routes/Movie.routes');
 const auditoriumRoutes = require('./routes/Auditorium.routes')
 const ticketRoutes = require('./routes/Ticket.routes')
+const seatRoutes = require('./routes/Seat.routes')
 
 
 const PORT = process.env.PORT || 3000;
@@ -24,9 +25,29 @@ app.use('/',router);
 app.use('/movies',movieRoutes);
 app.use('/auditorium',auditoriumRoutes);
 app.use('/ticket',ticketRoutes);
+app.use('/seat',seatRoutes);
 
 router.get('/',(req,res) => {
-    res.send("Hola")
+    const myRoutes = [
+        {
+            "route":"/movies",
+            "description":"se ecuentra toda las pelicuas con su respectivo CRUD"
+        },
+        {
+            "route":"/auditorium",
+            "description":"se ecuentra todas las salas con su respectivo CRUD"
+        },
+        {
+            "route":"/ticket",
+            "description":"se ecuentra todas los tickets con su respectivo CRUD"
+        },
+        {
+            "route":"/seat",
+            "description":"se ecuentra todas los asientos con su respectivo CRUD"
+        }
+
+    ]
+    res.status(200).json(myRoutes);
 });
 
 //para controlar paginas que no existe

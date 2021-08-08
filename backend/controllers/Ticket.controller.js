@@ -19,7 +19,7 @@ const ticketGet = async (req, res, next) => {
 
 const ticketPost = async (req, res, next) => {
   try {
-    const { hasPaid, num, timeLeft, day, auditorium } = req.body;
+    const { hasPaid, num, timeLeft, day, auditorium,seat } = req.body;
 
     const newTicket = new Ticket({
       hasPaid: hasPaid === "false" ? false : true,
@@ -27,6 +27,7 @@ const ticketPost = async (req, res, next) => {
       timeLeft,
       day: new Date(day),
       auditorium,
+      seat
     });
 
     console.log(newTicket);
