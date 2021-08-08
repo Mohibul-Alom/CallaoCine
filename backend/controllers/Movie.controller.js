@@ -67,11 +67,11 @@ const moviesPut = async (req, res, next)=>{
 
 const moviesDelete = async (req, res, next) => {
     
-    const { id } = req.body;
-  
+    
     try {
+      const { id } = req.body;
       const movieDeleted = await Movie.findByIdAndDelete(id);
-  
+
       if (!movieDeleted) {
         return res.status(404).json("false");
       } else {
@@ -82,10 +82,29 @@ const moviesDelete = async (req, res, next) => {
     }
 };
 
+const movieFindByName = async (req, res) => {
+    
+    try {
+      const { name } = req.params;
+      const movies = await Movie.find({title:{'$regex' : name, '$options' : 'i'}})
+  
+      if (movies.length === 0) {
+        const error = new Error("Pelicula no encontrada");
+        throw error;
+      }
+  
+      return res.status(200).json(movies);
+  
+    } catch (error) {
+      console.log("Error buscando peliculas->", error);
+      return next(error);
+    }
+};
 
 module.exports =  {
     moviesGet,
     moviesPost,
     moviesPut,
-    moviesDelete      
+    moviesDelete,
+    movieFindByName      
 };

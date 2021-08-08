@@ -12,4 +12,6 @@ router.put('/edit',controller.moviesPut);
 
 router.delete('/delete',controller.moviesDelete);
 
+router.get('/title/:name',controller.movieFindByName)
+
 module.exports = router;
