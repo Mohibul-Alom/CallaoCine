@@ -4,10 +4,10 @@ const {Schema} = mongoose;
 
 const ticketSchema = new Schema (
     {
-        hasPaid = {type: Boolean,required: true},
+        hasPaid: {type:Boolean,required: true},
         num:{type:Number,required: true},
-        timeLeft: {type: Date,required: true},
-        day: {type:Date,required: true},
+        timeLeft: {type: Number,required: true},
+        day: {type: Date,required: true},
         auditorium : {type:mongoose.Types.ObjectId,ref:'Auditoriums'},
         
     },

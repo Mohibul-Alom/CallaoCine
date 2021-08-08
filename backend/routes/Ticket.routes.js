@@ -2,13 +2,13 @@ const express = require('express');
 const controller = require('../controllers/Ticket.controller');
 const router = express.Router();
 
-router.get('/',controller.moviesGet);
+router.get('/',controller.ticketGet);
 
-router.post('/create',controller.moviesPost);
+router.post('/create',controller.ticketPost);
 
-router.put('/edit',controller.moviesPut);
+router.put('/edit',controller.ticketPut);
 
-router.delete('/delete',controller.moviesDelete);
+router.delete('/delete',controller.ticketDelete);
 
 
 module.exports = router;
