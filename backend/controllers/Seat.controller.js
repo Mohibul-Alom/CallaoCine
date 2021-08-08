@@ -38,24 +38,36 @@ const seatPut = async (req, res, next) => {
 
     const update = {};
 
-    if(row) update.row = row;
-    if(number) update.number = number;
-    if(price) update.price = price;
-    if(booked) update.booked = booked;
+    if (row) update.row = row;
+    if (number) update.number = number;
+    if (price) update.price = price;
+    if (booked) update.booked = booked;
 
     const updateSeat = await Seat.findByIdAndUpdate(
-        id,
-        update,
-        { new: true } // Usando esta opción, conseguiremos el documento actualizado cuando se complete el update
+      id,
+      update,
+      { new: true } // Usando esta opción, conseguiremos el documento actualizado cuando se complete el update
     );
     return res.status(200).json(updateSeat);
-
   } catch (error) {
     next(error);
   }
 };
 
-const seatDelete = async (req, res, next) => {};
+const seatDelete = async (req, res, next) => {
+  try {
+    const { id } = req.body;
+    const seatDeleted = await Seat.findByIdAndDelete(id);
+
+    if (!seatDeleted) {
+      return res.status(404).json("false");
+    } else {
+      return res.status(200).json("true");
+    }
+  } catch (error) {
+    return next(error);
+  }
+};
 
 module.exports = {
   seatGet,
