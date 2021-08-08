@@ -67,7 +67,6 @@ const moviesPut = async (req, res, next)=>{
 
 const moviesDelete = async (req, res, next) => {
     
-    
     try {
       const { id } = req.body;
       const movieDeleted = await Movies.findByIdAndDelete(id);
