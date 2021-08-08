@@ -10,4 +10,6 @@ router.post('/create',controller.auditoriumPost);
 
 router.put('/add-movie',controller.auditoriumPut);
 
+router.delete('/delete',controller.auditoriumDelete);
+
 module.exports = router;

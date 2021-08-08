@@ -19,8 +19,6 @@ const auditoriumGet = async (req, res, next) => {
 
 const auditoriumPost = async (req, res, next) => {
 
-    console.log("HOLA???")
-
     try {
         const { name, capacity, sessions, reservations, movie } = req.body;
 
@@ -47,7 +45,6 @@ const auditoriumPost = async (req, res, next) => {
 
 }
 
-
 const auditoriumPut = async (req, res, next) => { 
 
     try {
@@ -65,10 +62,28 @@ const auditoriumPut = async (req, res, next) => {
         next(err);
       }
 
-} 
+}
+
+const auditoriumDelete = async (req, res, next) => {
+    
+    
+    try {
+      const { id } = req.body;
+      const movieDeleted = await Audotorium.findByIdAndDelete(id);
+
+      if (!movieDeleted) {
+        return res.status(404).json("false");
+      } else {
+          return res.status(200).json("true");
+      }
+    } catch (error) {
+      return next(error);
+    }
+};
 
 module.exports = {
     auditoriumGet,
     auditoriumPost,
-    auditoriumPut
+    auditoriumPut,
+    auditoriumDelete
 }
