@@ -2,7 +2,7 @@
 const passport = require('passport');
 const registerStrategy = require('./register.strategy');
 const loginStrategy = require('./login.strategy');
-const User = require('../models/User');
+const User = require('../models/User.model');
 
 passport.serializeUser((user,done) => {
     return done(null,user._id);
@@ -23,7 +23,8 @@ passport.deserializeUser(async(userId,done) => {
 });
 
 const setStrategies = () => {
-
+    
+    console.log("Hola???? HAY ALGUIEN???")
     passport.use("registerStrategy",registerStrategy);
     passport.use("loginStrategy",loginStrategy);
 

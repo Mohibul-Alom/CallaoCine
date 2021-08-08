@@ -14,6 +14,7 @@ const registerStrategy = new LocalStrategy(
     async(req,email,password,done)=>{
 
         try{
+            console.log("HOLA???");
 
             const existingUser = await User.findOne({email});
 

@@ -1,5 +1,10 @@
 //imports
 const express = require('express');
+const passport = require('passport');
+const session = require('express-session');
+const Mongostore = require('connect-mongo');
+const auth = require('./auth');
+
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -10,13 +15,35 @@ db.connect();
 const movieRoutes = require('./routes/Movie.routes');
 const auditoriumRoutes = require('./routes/Auditorium.routes')
 const ticketRoutes = require('./routes/Ticket.routes')
-const seatRoutes = require('./routes/Seat.routes')
+const seatRoutes = require('./routes/Seat.routes');
+const authRoutes = require('./routes/Auth.routes');
 
 
 const PORT = process.env.PORT || 3000;
 
 const app = express();
 const router = express.Router();
+
+//para el auth
+auth.setStrategies();
+
+//para generar cookies
+app.use(session(
+    {
+        secret: process.env.Secret || "casaca!$$@OO124", //--> cambia esto si no quires ser hakeado
+        resave: false,
+        saveUninitialized: false,
+        cookie:{
+            maxAge: 2*60*60*1000,
+        },
+        store: Mongostore.create({mongoUrl:db.DB_URL}),
+    }
+));
+
+//para usar el passporte
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
@@ -26,6 +53,7 @@ app.use('/movies',movieRoutes);
 app.use('/auditorium',auditoriumRoutes);
 app.use('/ticket',ticketRoutes);
 app.use('/seat',seatRoutes);
+app.use('/auth',authRoutes);
 
 router.get('/',(req,res) => {
     const myRoutes = [
