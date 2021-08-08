@@ -29,7 +29,7 @@ const auditoriumPost = async (req, res, next) => {
                 name,
                 capacity,
                 sessions: new Date(sessions),
-                reservations,
+                resercvations,
                 movie:movie
             }
         )
@@ -45,7 +45,7 @@ const auditoriumPost = async (req, res, next) => {
 
 }
 
-const auditoriumPut = async (req, res, next) => { 
+const auditoriumMoviePut = async (req, res, next) => { 
 
     try {
         const auditoriumId = req.body.auditoriumId;
@@ -66,7 +66,6 @@ const auditoriumPut = async (req, res, next) => {
 
 const auditoriumDelete = async (req, res, next) => {
     
-    
     try {
       const { id } = req.body;
       const movieDeleted = await Audotorium.findByIdAndDelete(id);
@@ -84,6 +83,6 @@ const auditoriumDelete = async (req, res, next) => {
 module.exports = {
     auditoriumGet,
     auditoriumPost,
-    auditoriumPut,
+    auditoriumMoviePut,
     auditoriumDelete
 }

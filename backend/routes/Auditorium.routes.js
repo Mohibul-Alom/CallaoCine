@@ -8,7 +8,7 @@ router.get('/',controller.auditoriumGet);
 
 router.post('/create',controller.auditoriumPost);
 
-router.put('/add-movie',controller.auditoriumPut);
+router.put('/add-movie',controller.auditoriumMoviePut);
 
 router.delete('/delete',controller.auditoriumDelete);
 

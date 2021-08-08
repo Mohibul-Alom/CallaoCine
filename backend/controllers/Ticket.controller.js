@@ -55,6 +55,30 @@ const ticketPost = async (req, res, next) => {
 
 const ticketPut = async (req, res, next) => {
 
+    try {
+        
+        const { id, hasPaid, num, timeLeft, day, auditorium} = req.body;
+
+        const update = {};
+        
+        //recuerda mandar un string en hasPaid
+        if (hasPaid) update.hasPaid = hasPaid;
+        if (num) update.num = num;
+        if (timeLeft) update.timeLeft = Number(timeLeft);
+        if (day) update.day = new Date(day);
+        if (auditorium) update.auditorium = auditorium;
+    
+        const updateTicket = await Ticket.findByIdAndUpdate(
+          id,
+          update,
+          { new: true } // Usando esta opción, conseguiremos el documento actualizado cuando se complete el update
+        );
+        return res.status(200).json(updateTicket);
+      } catch (error) {
+        const myError = new Error("[Error] no se ha podido modificar los datos de ticket");
+        return next(myError);
+      }
+
 }
 
 const ticketDelete = async (req, res, next) => {
