@@ -20,7 +20,7 @@ const auditoriumGet = async (req, res, next) => {
 const auditoriumPost = async (req, res, next) => {
 
     try {
-        const { name, capacity, sessions, reservations, movie } = req.body;
+        const { name, capacity, sessions, movie } = req.body;
 
         console.log(movie)
 
@@ -29,7 +29,6 @@ const auditoriumPost = async (req, res, next) => {
                 name,
                 capacity,
                 sessions: new Date(sessions),
-                resercvations,
                 movie:movie
             }
         )
