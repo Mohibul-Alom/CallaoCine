@@ -30,7 +30,7 @@ auth.setStrategies();
 //para generar cookies
 app.use(session(
     {
-        secret: process.env.Secret || "casaca!$$@OO124", //--> cambia esto si no quires ser hakeado
+        secret: process.env.Secret || "casaca!$$@OO124", //--> cambia esto si no quieres ser hakeado!!!!
         resave: false,
         saveUninitialized: false,
         cookie:{

@@ -69,9 +69,35 @@ const seatDelete = async (req, res, next) => {
   }
 };
 
+
+const seatUpdate = async (id,newState) => {
+
+  try {
+      
+      const update = {};
+
+      update.booked = newState;
+
+      const  updateSeat = await Seat.findByIdAndUpdate(
+        id,
+        update,
+        {new:true}
+      );
+
+      return res.status(200).json(updateSeat);
+
+
+  } catch (error) {
+    const error = new Error('Error cambiando el estado de butacas');
+    return error;
+  }
+
+}
+
 module.exports = {
   seatGet,
   seatPost,
   seatPut,
   seatDelete,
+  seatUpdate
 };

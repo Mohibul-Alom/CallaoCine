@@ -27,7 +27,7 @@ const ticketPost = async (req, res, next) => {
       timeLeft,
       day: new Date(day),
       auditorium,
-      seat
+      seat //TODO:update reserved
     });
 
     console.log(newTicket);
@@ -69,7 +69,7 @@ const ticketPut = async (req, res, next) => {
 const ticketDelete = async (req, res, next) => {
   try {
     const { id } = req.body;
-    const ticketDeleted = await Ticket.findByIdAndDelete(id);
+    const ticketDeleted = await Ticket.findByIdAndDelete(id); //TODO update seat
 
     if (!ticketDeleted) {
       return res.status(404).json("El elemento no existe");

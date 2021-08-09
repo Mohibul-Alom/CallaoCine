@@ -23,8 +23,6 @@ passport.deserializeUser(async(userId,done) => {
 });
 
 const setStrategies = () => {
-    
-    console.log("Hola???? HAY ALGUIEN???")
     passport.use("registerStrategy",registerStrategy);
     passport.use("loginStrategy",loginStrategy);
 
