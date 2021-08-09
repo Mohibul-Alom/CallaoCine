@@ -1,11 +1,9 @@
 const Ticket = require("../models/Ticket.model");
+const controllerSeat = require("./Seat.controller");
 
 const ticketGet = async (req, res, next) => {
   try {
-    const tickets = await Ticket.find().populate({
-      path: "auditorium",
-      populate: { path: "movie" },
-    });
+    const tickets = await Ticket.find().populate('auditorium').populate('seat');
     if (tickets.length > 0) {
       return res.status(200).json(tickets);
     } else {
@@ -19,6 +17,7 @@ const ticketGet = async (req, res, next) => {
 
 const ticketPost = async (req, res, next) => {
   try {
+
     const { hasPaid, num, timeLeft, day, auditorium,seat } = req.body;
 
     const newTicket = new Ticket({
@@ -27,13 +26,23 @@ const ticketPost = async (req, res, next) => {
       timeLeft,
       day: new Date(day),
       auditorium,
-      seat //TODO:update reserved
+      seat 
     });
 
     console.log(newTicket);
 
+    //change seat booked state --> true
+    const updatedSeat = await controllerSeat.seatUpdate(seat,true);
+
+    if(updatedSeat === null){
+      const error = new Error ("Error no se ha podido reservar la butaca");
+      throw error;
+    }
+
     const createdTicket = await newTicket.save();
+
     return res.status(200).json(createdTicket);
+
   } catch (error) {
     next(error);
   }
@@ -55,7 +64,7 @@ const ticketPut = async (req, res, next) => {
     const updateTicket = await Ticket.findByIdAndUpdate(
       id,
       update,
-      { new: true } // Usando esta opción, conseguiremos el documento actualizado cuando se complete el update
+      { new: true }
     );
     return res.status(200).json(updateTicket);
   } catch (error) {
@@ -69,7 +78,23 @@ const ticketPut = async (req, res, next) => {
 const ticketDelete = async (req, res, next) => {
   try {
     const { id } = req.body;
-    const ticketDeleted = await Ticket.findByIdAndDelete(id); //TODO update seat
+
+    const ticket = await Ticket.findById(id);
+
+    if(ticket === null) {
+      throw new Error("Error buscando ticket");
+    }
+    console.log("mi ticket-->",ticket)
+
+    const seatId = ticket.seat;
+
+    console.log("seatId -->",seatId);
+
+    const seatModified = controllerSeat.seatUpdate(seatId,false);
+
+    if(seatModified === null) throw new Error("Error modificando la butaca");
+
+    const ticketDeleted = await Ticket.findByIdAndDelete(id);
 
     if (!ticketDeleted) {
       return res.status(404).json("El elemento no existe");

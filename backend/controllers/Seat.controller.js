@@ -78,18 +78,20 @@ const seatUpdate = async (id,newState) => {
 
       update.booked = newState;
 
-      const  updateSeat = await Seat.findByIdAndUpdate(
+      return await Seat.findByIdAndUpdate(
         id,
         update,
         {new:true}
       );
 
-      return res.status(200).json(updateSeat);
-
+      // if(updateSeat) {
+      //   return true;
+      // }
+      // return false;
 
   } catch (error) {
-    const error = new Error('Error cambiando el estado de butacas');
-    return error;
+    console.log("Error reservando una butaca");
+    return false;
   }
 
 }
