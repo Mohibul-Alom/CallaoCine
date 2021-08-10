@@ -1,4 +1,5 @@
 const isAuth = (req,res,next) => {
+    console.log("Hola, buenas")
     return req.isAuthenticated() 
     ? next()
     : res.status(401).json("No estas autorizado");
@@ -13,4 +14,9 @@ const isAdmin = (req,res,next) => {
     }else {
         return res.status(401).json("No estas autorizado");
     }
+}
+
+module.exports = {
+    isAuth,
+    isAdmin,
 }
