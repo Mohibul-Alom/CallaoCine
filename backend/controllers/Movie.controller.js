@@ -16,15 +16,16 @@ const moviesPost = async(req, res, next)=>{
 
     try{
 
-        const { title, director,description,duration,genere } = req.body;
-        
+        const { title, director,description,duration,genere,image } = req.body;
+
         const newMovie = new Movies(
             {
                 title, 
                 director,
                 description,
                 duration,
-                genere
+                genere,
+                image: req.fileUrl ? req.fileUrl : '',
             }
         );
 
@@ -66,11 +67,10 @@ const moviesPut = async (req, res, next)=>{
 }
 
 const moviesDelete = async (req, res, next) => {
-    
+
     try {
       const { id } = req.body;
       const movieDeleted = await Movies.findByIdAndDelete(id);
-
       if (!movieDeleted) {
         return res.status(404).json("false");
       } else {
