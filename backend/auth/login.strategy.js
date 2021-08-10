@@ -1,7 +1,7 @@
 const LocalStrategy = require('passport-local').Strategy;
 const User = require('../models/User.model');
 const bcrypt = require('bcrypt');
-const { isValidEmail, isValidPassword, throwError } = require("./utils");
+const { throwError } = require("./utils");
 
 
 const loginStrategy = new LocalStrategy(

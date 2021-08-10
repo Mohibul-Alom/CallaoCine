@@ -9,7 +9,7 @@ const userSchema = new Schema (
         email:{type: String, required: true},
         password:{type: String, required: true},
         name:{type: String, required: true},
-        tickets:{type:mongoose.Types.ObjectId,ref:'Ticket',default:null},
+        tickets:{type:mongoose.Types.ObjectId,ref:'Tickets',default:null},
     },
     {timestamps: true}
 );

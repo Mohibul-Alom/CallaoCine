@@ -84,11 +84,8 @@ const ticketDelete = async (req, res, next) => {
     if(ticket === null) {
       throw new Error("Error buscando ticket");
     }
-    console.log("mi ticket-->",ticket)
 
     const seatId = ticket.seat;
-
-    console.log("seatId -->",seatId);
 
     const seatModified = controllerSeat.seatUpdate(seatId,false);
 
