@@ -1,14 +1,15 @@
 const express = require('express');
 const controller = require('../controllers/Movie.controller');
+const { isAdmin } = require('../middlewares/auth.middleware');
 const router = express.Router();
 
 router.get('/',controller.moviesGet);
 
-router.post('/create',controller.moviesPost);
+router.post('/create',[isAdmin],controller.moviesPost);
 
-router.put('/edit',controller.moviesPut);
+router.put('/edit',[isAdmin],controller.moviesPut);
 
-router.delete('/delete',controller.moviesDelete);
+router.delete('/delete',[isAdmin],controller.moviesDelete);
 
 router.get('/title/:name',controller.movieFindByName)
 

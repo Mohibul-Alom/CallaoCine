@@ -1,15 +1,16 @@
 const express = require('express');
-const router = express.Router();
-
 const controller = require('../controllers/Seat.controller');
+const { isAdmin } = require('../middlewares/auth.middleware');
+
+const router = express.Router();
 
 router.get('/',controller.seatGet);
 
-router.post('/create',controller.seatPost);
+router.post('/create',[isAdmin],controller.seatPost);
 
-router.put('/edit',controller.seatPut);
+router.put('/edit',[isAdmin],controller.seatPut);
 
-router.delete('/delete',controller.seatDelete);
+router.delete('/delete',[isAdmin],controller.seatDelete);
 
 
 module.exports = router;

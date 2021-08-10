@@ -1,14 +1,14 @@
 const express = require('express');
 const controller = require('../controllers/Ticket.controller');
+const { isAuth } = require('../middlewares/auth.middleware');
 const router = express.Router();
 
-router.get('/',controller.ticketGet);
+router.get('/',[isAuth],controller.ticketGet);
 
-router.post('/create',controller.ticketPost);
+router.post('/create',[isAuth],controller.ticketPost);
 
-router.put('/edit',controller.ticketPut);
+router.put('/edit',[isAuth],controller.ticketPut);
 
-router.delete('/delete',controller.ticketDelete);
-
+router.delete('/delete',[isAuth],controller.ticketDelete);
 
 module.exports = router;
