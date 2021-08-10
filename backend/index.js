@@ -17,6 +17,7 @@ const auditoriumRoutes = require('./routes/Auditorium.routes')
 const ticketRoutes = require('./routes/Ticket.routes')
 const seatRoutes = require('./routes/Seat.routes');
 const authRoutes = require('./routes/Auth.routes');
+const userRoutes = require('./routes/User.routes');
 
 
 const PORT = process.env.PORT || 3000;
@@ -54,6 +55,7 @@ app.use('/auditorium',auditoriumRoutes);
 app.use('/ticket',ticketRoutes);
 app.use('/seat',seatRoutes);
 app.use('/auth',authRoutes);
+app.use('/user',userRoutes);
 
 router.get('/',(req,res) => {
     const myRoutes = [
