@@ -20,7 +20,22 @@ const loginPost = (req, res, next) => {
   passport.authenticate("loginStrategy", done)(req);
 };
 
+const logoutPost = (req, res, next) => {
+
+  if(req.user){
+    console.log("Cerrando session")
+    req.logout();
+    req.session.destroy(()=>{
+      res.clearCookie('connect.sid');
+      return res.redirect('/');
+    });
+    
+  }
+
+}
+
 module.exports = {
   registerPost,
   loginPost,
+  logoutPost
 };
