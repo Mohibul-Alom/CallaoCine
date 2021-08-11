@@ -27,14 +27,14 @@ const userUpdateTickets = async (req, res, next) => {
     try{
 
         const {userId,ticketId} = req.body;
-
+        
         const update = {};
 
-        if(ticketId) update.ticketId = ticketId;
+        if(ticketId === null || ticketId === undefined) throw new Error("id incorrecto");
 
         const updateUser = await User.findByIdAndUpdate(
             userId,
-            update,
+            {$addToSet: {tickets: ticketId}},
             {new:true}
         )
 
