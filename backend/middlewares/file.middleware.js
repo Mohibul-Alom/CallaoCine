@@ -41,7 +41,7 @@ const uploadToCloudinary = async (req, res, next) => {
         const path = req.file.path;
 
         // Si tengo archivo, lo subo a cloudinary
-        const avatar = await cloudinary.uploader.upload(path,use_filename => true);
+        const avatar = await cloudinary.uploader.upload(path,{use_filename:true});
 
         // Cojo la url que me devuelve cloudinary y lo meto al req.fileUrl para poder recibirlo en el controlador
         req.fileUrl = avatar.secure_url;
