@@ -1,5 +1,4 @@
 const isAuth = (req,res,next) => {
-    console.log("Hola, buenas")
     return req.isAuthenticated() 
     ? next()
     : res.status(401).json("No estas autorizado");

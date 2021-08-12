@@ -9,4 +9,6 @@ router.post('/login', controller.loginPost);
 
 router.post('/logout', controller.logoutPost);
 
+router.get('/checkSession',controller.checkSession);
+
 module.exports = router;
