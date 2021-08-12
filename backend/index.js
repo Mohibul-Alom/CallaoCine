@@ -4,6 +4,7 @@ const passport = require('passport');
 const session = require('express-session');
 const Mongostore = require('connect-mongo');
 const auth = require('./auth');
+const cors = require('cors');
 
 const dotenv = require('dotenv');
 dotenv.config();
@@ -24,6 +25,23 @@ const PORT = process.env.PORT || 3000;
 
 const app = express();
 const router = express.Router();
+
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Credentials', true);
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    next();
+  });
+  
+  /**
+   * Abrimos la url con CORS desde la que recibimos peticiones
+   */
+   app.use(cors({
+    origin: ['http://localhost:3000'],
+    credentials: true,
+  }));
+  
+
 
 //para el auth
 auth.setStrategies();
