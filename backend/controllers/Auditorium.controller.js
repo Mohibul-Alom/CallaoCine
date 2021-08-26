@@ -17,12 +17,34 @@ const auditoriumGet = async (req, res, next) => {
     }
 }
 
+const auditoriumGetByMovie = async (req, res, next) => {
+
+    const { movieId } = req.params;
+
+    try{
+
+        const auditoriums = await Audotorium.find({movie: movieId}).populate('movie');
+
+        if (auditoriums.length > 0) {
+            return res.status(200).json(auditoriums);
+        } else {
+            const error = new Error('La collection está vacía');
+            error.status = 404;
+            throw error;
+        }
+    }catch (error) {
+        console.error(error);
+        return next(error);
+    }
+
+}
+
+
+
 const auditoriumPost = async (req, res, next) => {
 
     try {
         const { name, capacity, sessions, movie } = req.body;
-
-        console.log(movie)
 
         const newAuditorium = new Audotorium(
             {
@@ -39,6 +61,7 @@ const auditoriumPost = async (req, res, next) => {
         return res.status(200).json(createdAuditorium)
 
     }catch (error) {
+        console.error(error);
         next(error);
     }
 
@@ -81,6 +104,7 @@ const auditoriumDelete = async (req, res, next) => {
 
 module.exports = {
     auditoriumGet,
+    auditoriumGetByMovie,
     auditoriumPost,
     auditoriumMoviePut,
     auditoriumDelete

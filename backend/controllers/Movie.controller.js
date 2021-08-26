@@ -89,6 +89,7 @@ const movieFindByName = async (req, res, next) => {
   
       if (movies.length === 0) {
         const error = new Error("Pelicula no encontrada");
+        error.status = 404;
         throw error;
       }
   

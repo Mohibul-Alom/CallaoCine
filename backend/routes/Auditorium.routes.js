@@ -13,4 +13,6 @@ router.put('/add-movie',[isAdmin],controller.auditoriumMoviePut);
 
 router.delete('/delete',[isAdmin],controller.auditoriumDelete);
 
+router.get('/:movieId',controller.auditoriumGetByMovie)
+
 module.exports = router;
