@@ -81,7 +81,7 @@ const moviesDelete = async (req, res, next) => {
     }
 };
 
-const movieFindByName = async (req, res) => {
+const movieFindByName = async (req, res, next) => {
     
     try {
       const { name } = req.params;
