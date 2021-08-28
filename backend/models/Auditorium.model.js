@@ -8,7 +8,7 @@ const auditoriumSchema = new Schema(
         capacity: {type: Number ,required: true, default:100},
         sessions: [{type: Date ,required: true}],
         movie: {type:mongoose.Types.ObjectId,ref:'Movies'},
-        seats: {type:mongoose.Types.ObjectId,ref:'Seats'}
+        seats: [{type:mongoose.Types.ObjectId,ref:'Seats'}]
     },
     {timestamps: true}
 )

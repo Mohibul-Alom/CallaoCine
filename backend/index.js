@@ -37,7 +37,7 @@ app.use((req, res, next) => {
    * Abrimos la url con CORS desde la que recibimos peticiones
    */
    app.use(cors({
-    origin: ['http://localhost:3000'],
+    origin: ['http://localhost:4200'],
     credentials: true,
   }));
   
