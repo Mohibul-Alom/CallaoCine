@@ -9,7 +9,7 @@ router.get('/',controller.auditoriumGet);
 
 router.post('/create',[isAdmin],controller.auditoriumPost);
 
-router.put('/add-movie',[isAdmin],controller.auditoriumMoviePut);
+router.put('/add-session',[isAdmin],controller.auditoriumMoviePut);
 
 router.delete('/delete',[isAdmin],controller.auditoriumDelete);
 

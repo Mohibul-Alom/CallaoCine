@@ -5,12 +5,30 @@ const session = require('express-session');
 const Mongostore = require('connect-mongo');
 const auth = require('./auth');
 const cors = require('cors');
+const cron = require('node-cron'); // task scheduler for running code given a interval
 
 const dotenv = require('dotenv');
 dotenv.config();
 
 const db = require('./config/db.config');
 db.connect();
+
+const controller = require('./controllers/Auditorium.controller');
+//cron
+// cron.schedule("*/30 * * * * *", function() {
+//     console.log("running a task every 30 seconds");
+//     controller.auditoriumDeletePastSession();
+// });
+
+cron.schedule('0 10 * * *', () => {
+    console.log('Running a delete auditorium session at 10:00 at Europe/Amsterdam timezone');
+    controller.auditoriumDeletePastSession();
+}, {
+    scheduled: true,
+    timezone: "Europe/Amsterdam"
+});
+  
+
 
 //rutas
 const movieRoutes = require('./routes/Movie.routes');
