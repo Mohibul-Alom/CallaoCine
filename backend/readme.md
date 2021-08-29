@@ -5,4 +5,4 @@
 
 DOCKER:
 1. ``docker build -t app-callao-cine-backend .``
-2. ``docker run -p 6000:5000 -d app-callao-cine-backend ``
+2. ``docker run -p 5000:5000 -d app-callao-cine-backend ``
