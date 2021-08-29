@@ -1,4 +1,5 @@
 const Auditorium = require("../models/Auditorium.model");
+const {createSeats} = require("../controllers/Seat.controller");
 
 const auditoriumGet = async (req, res, next) => {
   try {
@@ -37,18 +38,24 @@ const auditoriumGetByMovie = async (req, res, next) => {
   }
 };
 
-const auditoriumPost = async (req, res, next) => {
+const auditoriumPost = async (req, res, next) => { //TODO: create 88 seats and and them to the auditorium
   try {
     const { name, capacity, sessions, movie } = req.body;
+
+    const seats = await createSeats();
+
+    if(seats.length === 0) {
+      const error = new Error("Error a la hora de crear butacas");
+      throw error;
+    }
 
     const newAuditorium = new Auditorium({
       name,
       capacity,
       sessions: new Date(sessions),
       movie: movie,
+      seats:seats,
     });
-
-    console.log(newAuditorium);
 
     const createdAuditorium = await newAuditorium.save();
     return res.status(200).json(createdAuditorium);

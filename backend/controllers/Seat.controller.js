@@ -25,8 +25,8 @@ const seatPost = async (req, res, next) => {
       booked: booked === "false" ? false : true,
     });
 
-    const createdTicket = await newSeat.save();
-    return res.status(200).json(createdTicket);
+    const createdSeat = await newSeat.save();
+    return res.status(200).json(createdSeat);
   } catch (error) {
     next(error);
   }
@@ -96,10 +96,41 @@ const seatUpdate = async (id,newState) => {
 
 }
 
+const createSeats = async () => {
+
+  const seats = [];
+  const rows = ["A","B","C","D","E","F","G","H"];
+  const number = [1,2,3, 4,5,6,7,8];
+
+
+  try {
+
+    for (let i = 0; i < rows.length; i++) {
+
+      for (let j = 0; j < number.length; j++) {
+          const newSeat = new Seat({
+            row: rows[i],
+            number: number[j],
+            price: 10,
+            booked: false,
+          });
+          const createdSeat = await newSeat.save();
+          seats.push(createdSeat);
+      }
+
+    }
+    return seats;
+
+  }catch (error) {
+    console.log(error);
+  }
+}
+
 module.exports = {
   seatGet,
   seatPost,
   seatPut,
   seatDelete,
-  seatUpdate
+  seatUpdate,
+  createSeats
 };
