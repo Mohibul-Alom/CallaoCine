@@ -13,16 +13,16 @@ dotenv.config();
 const db = require('./config/db.config');
 db.connect();
 
-const controller = require('./controllers/Auditorium.controller');
-//cron
+const controller = require('./controllers/SessionsMovie.controller');
+
 // cron.schedule("*/30 * * * * *", function() {
 //     console.log("running a task every 30 seconds");
-//     controller.auditoriumDeletePastSession();
+//     controller.deletePastSession();
 // });
 
 cron.schedule('0 10 * * *', () => {
     console.log('Running a delete auditorium session at 10:00 at Europe/Amsterdam timezone');
-    controller.auditoriumDeletePastSession();
+    controller.deletePastSession();
 }, {
     scheduled: true,
     timezone: "Europe/Amsterdam"

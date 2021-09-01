@@ -11,6 +11,8 @@ router.post('/create',[isAdmin],controller.sessionPost);
 
 router.put('/edit',[isAdmin],controller.sessionPut);
 
+router.get('/movie/:movieId',controller.sessionGetByMovie);
+
 router.get('/:id',controller.sessionGetById);
 
 module.exports = router;

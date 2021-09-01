@@ -4,8 +4,6 @@ const {createSeats, deleteSeat} = require('./Seat.controller');
 
 const sessionGet = async (req, res, next) => {
 
-    console.log('Hola??')
-
     try{
         const sessions = await Session.find().populate('seats');
 
@@ -41,10 +39,31 @@ const sessionGetById = async (req, res, next) => {
 
 }
 
+const sessionGetByMovie = async (req, res, next) => {
+
+    const { movieId } = req.params;
+
+    try{
+        const sessions = await Session.find({movie:movieId});
+
+        if(sessions.length > 0){
+            return res.status(200).json(sessions);
+        }else{
+            const error = new Error("La collection está vacía");
+            error.status = 404;
+            throw error;
+        }
+    }catch(err){
+        console.error(error);
+        return next
+    }
+
+}
+
+
 const sessionPost = async (req, res, next) => {
 
     const {date,movie,auditorium} = req.body;
-
     try{
         const seats = await createSeats();
     
@@ -66,7 +85,6 @@ const sessionPost = async (req, res, next) => {
     }catch(err){
         return next(err);
     }
-
 }
 
 
@@ -108,18 +126,38 @@ const sessionDelete = async (req, res, next) => {
         //     if(!deletedSeat) throw new Error("Error al eliminar una butaca")
         // });
 
-        
-
     }catch(err){
         next(err);
     }
-
 }
 
+const deletePastSession = async() => {
+
+    try{
+        const sessions = await Session.find();
+        const today = new Date();
+
+        for (let i = 0; i < sessions.length; i++) {
+            const session = sessions[i];
+
+            if(today >= session.date){
+                console.log(
+                    "deletePastSessions--> Found 1 session to delete"
+                );
+                const deletedSession = await Session.findByIdAndRemove(session._id);
+            }  
+        }
+    }catch(err){
+        console.log(err)
+    }
+
+}
 
 module.exports = {
     sessionGet,
     sessionGetById,
     sessionPost,
     sessionPut,
+    sessionGetByMovie,
+    deletePastSession
 }
