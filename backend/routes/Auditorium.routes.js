@@ -13,6 +13,8 @@ router.put('/add-session',[isAdmin],controller.auditoriumMoviePut);
 
 router.delete('/delete',[isAdmin],controller.auditoriumDelete);
 
-router.get('/:movieId',controller.auditoriumGetByMovie)
+router.get('/movieId/:movieId',controller.auditoriumGetByMovie);
+
+router.get('/:id',controller.auditoriumGetById)
 
 module.exports = router;

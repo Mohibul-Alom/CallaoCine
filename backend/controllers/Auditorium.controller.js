@@ -18,6 +18,24 @@ const auditoriumGet = async (req, res, next) => {
   }
 };
 
+
+const auditoriumGetById = async (req, res, next) => {
+  try {
+    
+    const {id} = req.params;
+
+    const auditorium = await Auditorium.findById(id);
+    if (auditorium !== null && auditorium !== undefined) {
+      return res.status(200).json(auditorium);
+    } else {
+      const error = new Error("No se ha encontrado la sala");
+      throw error;
+    }
+  } catch (error) {
+    return next(error);
+  }
+};
+
 const auditoriumGetByMovie = async (req, res, next) => {
   const { movieId } = req.params;
 
@@ -71,14 +89,12 @@ const auditoriumMoviePut = async (req, res, next) => {
     let session = req.body.session;
 
     session = new Date(session);
-    console.log(session);
 
     const updatedAuditorium = await Auditorium.findByIdAndUpdate(
       auditoriumId,
       { $addToSet: { sessions: session } },
       { new: true }
     );
-
     return res.status(200).json(updatedAuditorium);
   } catch (err) {
     console.log(err);
@@ -137,4 +153,5 @@ module.exports = {
   auditoriumMoviePut,
   auditoriumDelete,
   auditoriumDeletePastSession,
+  auditoriumGetById
 };

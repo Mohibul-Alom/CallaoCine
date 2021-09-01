@@ -84,11 +84,6 @@ const seatUpdate = async (id,newState) => {
         {new:true}
       );
 
-      // if(updateSeat) {
-      //   return true;
-      // }
-      // return false;
-
   } catch (error) {
     console.log("Error reservando una butaca");
     return false;
