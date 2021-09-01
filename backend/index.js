@@ -37,6 +37,7 @@ const ticketRoutes = require('./routes/Ticket.routes')
 const seatRoutes = require('./routes/Seat.routes');
 const authRoutes = require('./routes/Auth.routes');
 const userRoutes = require('./routes/User.routes');
+const sessionRoutes = require('./routes/SessionMovie.routes');
 
 
 const PORT = process.env.PORT || 3000;
@@ -92,6 +93,8 @@ app.use('/ticket',ticketRoutes);
 app.use('/seat',seatRoutes);
 app.use('/auth',authRoutes);
 app.use('/user',userRoutes);
+app.use('/session',sessionRoutes);
+
 
 router.get('/',(req,res) => {
     const myRoutes = [

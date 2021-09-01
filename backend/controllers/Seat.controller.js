@@ -121,11 +121,28 @@ const createSeats = async () => {
   }
 }
 
+const deleteSeat = async (id) => {
+
+  try{
+    const seatDeleted = await Seat.findByIdAndDelete(id);
+    if (!seatDeleted) {
+      return res.status(404).json("false");
+    } else {
+      return res.status(200).json("true");
+    }
+
+  }catch (error) {
+    console.log(error);
+  }
+
+}
+
 module.exports = {
   seatGet,
   seatPost,
   seatPut,
   seatDelete,
   seatUpdate,
-  createSeats
+  createSeats,
+  deleteSeat
 };

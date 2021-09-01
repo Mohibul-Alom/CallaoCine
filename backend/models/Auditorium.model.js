@@ -6,9 +6,6 @@ const auditoriumSchema = new Schema(
     {
         name: {type: String ,required: true},
         capacity: {type: Number ,required: true, default:64},
-        sessions: [{type: Date ,required: true}],
-        movie: {type:mongoose.Types.ObjectId,ref:'Movies'},
-        seats: [{type:mongoose.Types.ObjectId,ref:'Seats'}]
     },
     {timestamps: true}
 )
