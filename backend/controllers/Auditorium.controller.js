@@ -1,10 +1,8 @@
 const Auditorium = require("../models/Auditorium.model");
-const {createSeats} = require("../controllers/Seat.controller");
 
 const auditoriumGet = async (req, res, next) => {
   try {
-    // const auditoriums = await Auditorium.find().populate("movie");
-
+    
     const auditoriums = await Auditorium.find();
 
     if (auditoriums.length > 0) {
@@ -19,31 +17,13 @@ const auditoriumGet = async (req, res, next) => {
 };
 
 
-const auditoriumGetById = async (req, res, next) => {
-  try {
-    
-    const {id} = req.params;
-
-    const auditorium = await Auditorium.findById(id);
-    if (auditorium !== null && auditorium !== undefined) {
-      return res.status(200).json(auditorium);
-    } else {
-      const error = new Error("No se ha encontrado la sala");
-      throw error;
-    }
-  } catch (error) {
-    return next(error);
-  }
-};
-
-const auditoriumGetByMovie = async (req, res, next) => {
-  const { movieId } = req.params;
+const auditoriumGetByName = async (req, res, next) => {
+  const { name } = req.params;
 
   try {
-    const auditoriums = await Auditorium.find({ movie: movieId });
+    const auditoriums = await Auditorium.find({ name: name });
 
     if (auditoriums.length > 0) {
-        //TODO: filer the session
       return res.status(200).json(auditoriums);
     } else {
       const error = new Error("La collection está vacía");
@@ -56,23 +36,13 @@ const auditoriumGetByMovie = async (req, res, next) => {
   }
 };
 
-const auditoriumPost = async (req, res, next) => { //TODO: create 88 seats and and them to the auditorium
+const auditoriumPost = async (req, res, next) => {
   try {
-    const { name, capacity, sessions, movie } = req.body;
-
-    const seats = await createSeats();
-
-    if(seats.length === 0) {
-      const error = new Error("Error a la hora de crear butacas");
-      throw error;
-    }
+    const { name, capacity } = req.body;
 
     const newAuditorium = new Auditorium({
       name,
       capacity,
-      sessions: new Date(sessions),
-      movie: movie,
-      seats:seats,
     });
 
     const createdAuditorium = await newAuditorium.save();
@@ -83,24 +53,7 @@ const auditoriumPost = async (req, res, next) => { //TODO: create 88 seats and a
   }
 };
 
-const auditoriumMoviePut = async (req, res, next) => {
-  try {
-    const { auditoriumId } = req.body;
-    let session = req.body.session;
 
-    session = new Date(session);
-
-    const updatedAuditorium = await Auditorium.findByIdAndUpdate(
-      auditoriumId,
-      { $addToSet: { sessions: session } },
-      { new: true }
-    );
-    return res.status(200).json(updatedAuditorium);
-  } catch (err) {
-    console.log(err);
-    next(err);
-  }
-};
 
 const auditoriumDelete = async (req, res, next) => {
   try {
@@ -117,41 +70,11 @@ const auditoriumDelete = async (req, res, next) => {
   }
 };
 
-const auditoriumDeletePastSession = async () => {
-  try {
-    const auditoriums = await Auditorium.find();
 
-    const today = new Date();
-
-    for (let i = 0; i < auditoriums.length; i++) {
-      const auditorium = auditoriums[i];
-
-      for (let j = 0; j < auditorium.sessions.length; j++) {
-        const session = auditorium.sessions[j];
-
-        if (today >= session) {
-          console.log(
-            "auditoriumDeletePastSession--> Found 1 session to delete"
-          );
-          const auditoriumChanged = await Auditorium.findByIdAndUpdate(
-            auditorium._id,
-            { $pull: { sessions: session } },
-            { new: true }
-          );
-        }
-      }
-    }
-  } catch (err) {
-    console.error(err);
-  }
-};
 
 module.exports = {
   auditoriumGet,
-  auditoriumGetByMovie,
+  auditoriumGetByName,
   auditoriumPost,
-  auditoriumMoviePut,
   auditoriumDelete,
-  auditoriumDeletePastSession,
-  auditoriumGetById
 };

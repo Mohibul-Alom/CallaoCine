@@ -25,7 +25,7 @@ const sessionGetById = async (req, res, next) => {
     const { id } = req.params;
 
     try{
-        const session = await Session.findById(id);
+        const session = await Session.findById(id).populate('seats');
         if(session !==null && session !==undefined){
             return res.status(200).json(session);
         }else{
