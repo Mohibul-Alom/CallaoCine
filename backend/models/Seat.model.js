@@ -8,6 +8,7 @@ const seatSchema = new Schema(
         number:{type: Number, required: true},
         price:{type: Number, required: true, default: 10},
         booked: {type: Boolean, required: true},
+        session:{type: mongoose.Types.ObjectId, ref:'SessionsMovie'}
     },
     { timestamps: true }
 )

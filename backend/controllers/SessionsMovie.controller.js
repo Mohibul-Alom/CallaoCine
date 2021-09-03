@@ -1,6 +1,7 @@
 const Session = require('../models/SessionsMovie.model');
-const {createSeats, deleteSeat} = require('./Seat.controller');
+const {createSeats, deleteSeat,deleteManySeatsBySessionId} = require('./Seat.controller');
 
+//TODO: arregla la eliminacion de butacas listillo
 
 const sessionGet = async (req, res, next) => {
 
@@ -54,8 +55,8 @@ const sessionGetByMovie = async (req, res, next) => {
             throw error;
         }
     }catch(err){
-        console.error(error);
-        return next
+        console.error(err);
+        return next(err);
     }
 
 }
@@ -65,19 +66,20 @@ const sessionPost = async (req, res, next) => {
 
     const {date,movie,auditorium} = req.body;
     try{
-        const seats = await createSeats();
+        
+        const newSession = new Session({
+            date: new Date(date),
+            movie,
+            auditorium,
+        });
+
+        const seats = await createSeats(newSession._id);
     
         if(seats.length === 0) {
             const error = new Error("Error a la hora de crear butacas");
             throw error;
         }
-
-        const newSession = new Session({
-            date: new Date(date),
-            movie,
-            seats: seats,
-            auditorium,
-        });
+        newSession.seats = seats;
 
         const createdSession = await newSession.save();
         return res.status(200).json(createdSession);
@@ -107,7 +109,7 @@ const sessionPut = async (req, res, next) => {
         return res.status(200).json(updateSession);
     }catch(err){
         const myError = new Error("[Error] no se ha podido modificar los datos");
-        next(err);
+        next(myError);
     }
 }
 
@@ -116,17 +118,29 @@ const sessionDelete = async (req, res, next) => {
     try{
 
         //TODO: para el senior
+        const { id } = req.params;
 
-        // const { id } = req.params;
+        const session = await Session.findById(id);
 
-        // const session = await Session.findById(id);
+        if(session !== null && session !== undefined){
+            const deletedSeats = await deleteManySeatsBySessionId(session._id);
 
-        // session.seats.forEach(element => {
-        //     const deletedSeat = deleteSeat(element);
-        //     if(!deletedSeat) throw new Error("Error al eliminar una butaca")
-        // });
+            if(deletedSeats){
+                const deletedSession = await Session.findByIdAndDelete(id);
+                console.log("Eliminado la session con id-->",deletedSession._id);
+                return res.status(200).json("Eliminado la session de manera exitosa")
+            }else{
+                console.log("No hay butacas que eliminar");
+                const error = new Error("Error al eliminar las butacas de la session: ",id);
+                throw error;
+            }
+        }else{
+            const error = new Error(`No se ha encontrado la session con el id--> ${id}`);
+            throw error;
+        }
 
     }catch(err){
+        console.log(err);
         next(err);
     }
 }
@@ -159,5 +173,6 @@ module.exports = {
     sessionPost,
     sessionPut,
     sessionGetByMovie,
-    deletePastSession
+    deletePastSession,
+    sessionDelete
 }

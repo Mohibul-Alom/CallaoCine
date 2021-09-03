@@ -13,6 +13,8 @@ router.put('/edit',[isAdmin],controller.sessionPut);
 
 router.get('/movie/:movieId',controller.sessionGetByMovie);
 
+router.delete('/delete/:id',controller.sessionDelete);
+
 router.get('/:id',controller.sessionGetById);
 
 module.exports = router;

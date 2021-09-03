@@ -91,12 +91,11 @@ const seatUpdate = async (id,newState) => {
 
 }
 
-const createSeats = async () => {
+const createSeats = async (id) => {
 
   const seats = [];
   const rows = ["A","B","C","D","E","F","G","H"];
   const number = [1,2,3, 4,5,6,7,8];
-
 
   try {
 
@@ -108,11 +107,11 @@ const createSeats = async () => {
             number: number[j],
             price: 10,
             booked: false,
+            session: id,
           });
           const createdSeat = await newSeat.save();
           seats.push(createdSeat);
       }
-
     }
     return seats;
 
@@ -121,10 +120,11 @@ const createSeats = async () => {
   }
 }
 
-const deleteSeat = async (id) => {
+const deleteSeat = async (sessionId) => {
 
   try{
-    const seatDeleted = await Seat.findByIdAndDelete(id);
+    
+    const seatDeleted = await Seat.findByIdAndDelete(sessionId);
     if (!seatDeleted) {
       return res.status(404).json("false");
     } else {
@@ -137,6 +137,29 @@ const deleteSeat = async (id) => {
 
 }
 
+const deleteManySeatsBySessionId = async(sessionId) => {
+
+
+  try{
+    const deletedSeats = await Seat.deleteMany({session:sessionId});
+
+    if(deletedSeats.deletedCount !==0){
+
+      console.log("Butacas eliminados con la seesionId--> "+sessionId);
+      return true;
+
+    }else{
+      return false;
+    }
+
+  }catch(error) {
+    console.log(error);
+    return false;
+  }
+
+
+}
+
 module.exports = {
   seatGet,
   seatPost,
@@ -144,5 +167,6 @@ module.exports = {
   seatDelete,
   seatUpdate,
   createSeats,
-  deleteSeat
+  deleteSeat,
+  deleteManySeatsBySessionId
 };
