@@ -19,5 +19,3 @@ router.get('/:id',controller.sessionGetById);
 
 module.exports = router;
 
-//TODO: for implementing delete sessions i need a senior
-

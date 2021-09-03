@@ -145,7 +145,7 @@ const deleteManySeatsBySessionId = async(sessionId) => {
 
     if(deletedSeats.deletedCount !==0){
 
-      console.log("Butacas eliminados con la seesionId--> "+sessionId);
+      console.log("Butacas eliminados con la seesionId--> "+deletedSeats.deletedCount);
       return true;
 
     }else{

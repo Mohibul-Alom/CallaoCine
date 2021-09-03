@@ -1,12 +1,10 @@
 const User = require('../models/User.model');
 
+const {deleteTicket} = require('../controllers/Ticket.controller');
+
 const userGet = async (req, res, next) => {
 
     try {
-
-        // if(req.user){
-        //     console.log('Existe usuario con id-->',req.user.id)
-        // }
 
         const user = await User.findById(req.user.id);
 
@@ -47,6 +45,30 @@ const userUpdateTickets = async (req, res, next) => {
 
 const userDeleteTickets = async (req, res, next) => {
 
+    try{
+
+        const { userId, ticketId } = req.body;
+        const isTicketDeleted = await deleteTicket(ticketId);
+        
+        if(isTicketDeleted){
+
+            const updateUser = await User.findByIdAndUpdate(
+                userId,
+                {$pullAll:{tickets: ticketId}},
+                {new:true}
+            )
+    
+            return res.status(200).json(updateUser);
+
+        }else{
+            const error = new Error("Error al eliminar el ticket");
+            throw error;
+        }
+
+    }catch (error) {
+        console.error(error);
+        next(error);
+    }
 }
 
 module.exports = {

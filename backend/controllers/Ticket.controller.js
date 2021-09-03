@@ -1,6 +1,9 @@
 const Ticket = require("../models/Ticket.model");
 const controllerSeat = require("./Seat.controller");
 
+
+//TODO: arregla la eliminacion de tickets y de paso el modelo de ticket
+
 const ticketGet = async (req, res, next) => {
   try {
     const tickets = await Ticket.find().populate('auditorium').populate('seat');
@@ -15,32 +18,51 @@ const ticketGet = async (req, res, next) => {
   }
 };
 
+const ticketGetById = async (req, res, next) => {
+
+  try{
+
+    const { id } = req.params;
+
+    const ticket = await Ticket.findById(id);
+
+    if(ticket !== null && ticket !== undefined) {
+
+      return res.status(200).json(ticket);
+    }else{
+      const error = new Error("No se ha podido encontrar el ticket");
+      throw error;
+    }
+
+  }catch (error) {
+    next(error);
+  }
+
+
+}
+
 const ticketPost = async (req, res, next) => {
   try {
 
-    const { hasPaid, num, timeLeft, day, auditorium,seat } = req.body;
+    const { hasPaid, timeLeft, day, auditorium, seat } = req.body;
 
     const newTicket = new Ticket({
       hasPaid: hasPaid === "false" ? false : true,
-      num,
       timeLeft,
       day: new Date(day),
       auditorium,
       seat 
     });
 
-    console.log(newTicket);
-
     //change seat booked state --> true
     const updatedSeat = await controllerSeat.seatUpdate(seat,true);
 
-    if(updatedSeat === null){
+    if(updatedSeat === null || updatedSeat === undefined){
       const error = new Error ("Error no se ha podido reservar la butaca");
       throw error;
     }
 
     const createdTicket = await newTicket.save();
-
     return res.status(200).json(createdTicket);
 
   } catch (error) {
@@ -103,9 +125,41 @@ const ticketDelete = async (req, res, next) => {
   }
 };
 
+const deleteTicket = async(ticketId) =>{
+
+  try {
+
+    const ticket = await Ticket.findById(ticketId);
+
+    if(ticket === null || ticket === undefined) {
+      throw new Error("Error buscando ticket, ticket no encontrado");
+    }
+
+    const seatId = ticket.seat;
+
+    const seatModified = controllerSeat.seatUpdate(seatId,false);
+
+    if(seatModified === null || seatModified === undefined) throw new Error("Error modificando la butaca");
+
+    const ticketDeleted = await Ticket.findByIdAndDelete(ticketId);
+
+    if (!ticketDeleted) {
+     return false;
+    } else {
+      return true;
+    }
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+
+}
+
 module.exports = {
   ticketGet,
   ticketPost,
   ticketPut,
   ticketDelete,
+  deleteTicket,
+  ticketGetById
 };
