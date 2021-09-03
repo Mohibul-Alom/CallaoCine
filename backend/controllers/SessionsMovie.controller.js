@@ -6,7 +6,7 @@ const {createSeats, deleteSeat,deleteManySeatsBySessionId} = require('./Seat.con
 const sessionGet = async (req, res, next) => {
 
     try{
-        const sessions = await Session.find().populate('seats');
+        const sessions = await Session.find();
 
         if(sessions.length > 0){
             return res.status(200).json(sessions);
@@ -117,7 +117,6 @@ const sessionDelete = async (req, res, next) => {
 
     try{
 
-        //TODO: para el senior
         const { id } = req.params;
 
         const session = await Session.findById(id);
@@ -156,15 +155,43 @@ const deletePastSession = async() => {
 
             if(today >= session.date){
                 console.log(
-                    "deletePastSessions--> Found 1 session to delete"
+                    `deletePastSession--> eliminar session: ${session.date.toString()}`
                 );
-                const deletedSession = await Session.findByIdAndRemove(session._id);
+                deleteSession(session._id)
             }  
         }
     }catch(err){
         console.log(err)
     }
 
+}
+
+const deleteSession = async(id) => {
+    try{
+
+        const session = await Session.findById(id);
+
+        if(session !== null && session !== undefined){
+            const deletedSeats = await deleteManySeatsBySessionId(session._id);
+
+            if(deletedSeats){
+                const deletedSession = await Session.findByIdAndDelete(id);
+                console.log("Eliminado la session con id-->",deletedSession._id);
+                return true;
+            }else{
+                console.log("No hay butacas que eliminar");
+                const error = new Error("Error al eliminar las butacas de la session: ",id);
+                throw error;
+            }
+        }else{
+            const error = new Error(`No se ha encontrado la session con el id--> ${id}`);
+            throw error;
+        }
+
+    }catch(err){
+        console.log(err);
+        return false;
+    }
 }
 
 module.exports = {
