@@ -9,6 +9,7 @@ const userGet = async (req, res, next) => {
         const user = await User.findById(id);
 
         if(user !== null) {
+            user.password = undefined;
             return res.status(200).json(user);
         }else{
             throw new Error("[Error] No se ha encontrado al usuario")

@@ -13,6 +13,7 @@ dotenv.config();
 const db = require('./config/db.config');
 db.connect();
 
+//ejecutar una funcion todos los dias a las 10:00 de la mañana o cada 30 segundos (comentado por defecto)
 const controller = require('./controllers/SessionsMovie.controller');
 
 // cron.schedule("*/30 * * * * *", function() {

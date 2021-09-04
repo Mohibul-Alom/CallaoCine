@@ -11,6 +11,6 @@ router.put('/add-ticket',controller.userUpdateTickets);
 router.delete('/delete-ticket',[isAuth,isAdmin],controller.userDeleteTickets);
 
 //TODO: ⚠️⚠️😒😒 no esta securizado 😒😒⚠️⚠️ pista--> JWT
-router.get('/',controller.userGet);
+router.get('/:id',controller.userGet);
 
 module.exports = router;
