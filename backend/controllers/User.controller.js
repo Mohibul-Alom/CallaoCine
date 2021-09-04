@@ -5,8 +5,8 @@ const {deleteTicket} = require('../controllers/Ticket.controller');
 const userGet = async (req, res, next) => {
 
     try {
-
-        const user = await User.findById(req.user.id);
+        const { id } = req.params;
+        const user = await User.findById(id);
 
         if(user !== null) {
             return res.status(200).json(user);
@@ -54,10 +54,10 @@ const userDeleteTickets = async (req, res, next) => {
 
             const updateUser = await User.findByIdAndUpdate(
                 userId,
-                {$pullAll:{tickets: ticketId}},
+                {$pull:{tickets: ticketId}},
                 {new:true}
             )
-    
+            updateUser.password = undefined;
             return res.status(200).json(updateUser);
 
         }else{
