@@ -24,7 +24,7 @@ const ticketGetById = async (req, res, next) => {
 
     const { id } = req.params;
 
-    const ticket = await Ticket.findById(id);
+    const ticket = await Ticket.findById(id).populate('auditorium').populate('seat').populate('movie');
 
     if(ticket !== null && ticket !== undefined) {
 
@@ -44,14 +44,15 @@ const ticketGetById = async (req, res, next) => {
 const ticketPost = async (req, res, next) => {
   try {
 
-    const { hasPaid, timeLeft, day, auditorium, seat } = req.body;
+    const { hasPaid, timeLeft, day, auditorium, seat,movie } = req.body;
 
     const newTicket = new Ticket({
       hasPaid: hasPaid === "false" ? false : true,
       timeLeft,
       day: new Date(day),
       auditorium,
-      seat 
+      seat,
+      movie 
     });
 
     //change seat booked state --> true

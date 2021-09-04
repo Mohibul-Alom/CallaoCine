@@ -9,6 +9,7 @@ const ticketSchema = new Schema (
         day: {type: Date,required: true},
         auditorium : {type:mongoose.Types.ObjectId,ref:'Auditoriums'},
         seat: {type:mongoose.Types.ObjectId,ref:'Seats'},
+        movie: {type:mongoose.Types.ObjectId,ref:'Movies'}
     },
     {timestamps: true}
 );
