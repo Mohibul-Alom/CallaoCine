@@ -1,0 +1,23 @@
+<header class="b-header">
+    <section>
+        <label for="menu-control" class="hamburger">
+            <i class="hamburger__icon"></i>
+            <i class="hamburger__icon"></i>
+            <i class="hamburger__icon"></i>
+        </label>
+    
+        <input type="checkbox" id="menu-control" class="menu-control">
+    
+        <aside class="sidebar">
+            <nav class="sidebar__menu">
+                <a *ngFor="let link of header" [routerLink]="link.navigate">{{link.name}}</a>
+                
+            </nav>
+
+            <label for="menu-control" class="sidebar__close"></label>
+
+        </aside>
+
+    </section>
+    
+</header>

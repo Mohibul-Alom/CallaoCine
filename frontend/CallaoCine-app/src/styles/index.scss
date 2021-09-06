@@ -1,0 +1,14 @@
+@import './colors';
+
+body{
+    margin: 0px;
+    background-color:var(--background-color);
+}
+
+a{
+    text-decoration: none;
+}
+
+li{
+    list-style-type: none;
+}

@@ -1,0 +1,24 @@
+<div class="container">
+
+    <div class="row d-flex justify-content-center align-items-center">
+
+        <div class="col-12 m-5">
+            <a href="/home">Back to home</a>
+        </div>
+
+
+        <div *ngFor="let ticket of userTickets" class="col-12 col-md-6 col-lg-3 m-3">
+
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src={{ticket.movie.image}} alt={{ticket.movie.title}}>
+                <div class="card-body">
+                  <span>{{ticket.auditorium.name}} at {{ticket.day.getHours()}}:{{ticket.day.getMinutes()}} of {{ticket.day.getDate()}}/{{ticket.day.getMonth()+1}}</span>
+                  <p>Seat: {{ticket.seat.row}}{{ticket.seat.number}}</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

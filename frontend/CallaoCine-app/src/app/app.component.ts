@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Iheader } from './models/iapp';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,28 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'CallaoCine-app';
+  
+  public header:Iheader[] = [
+
+    {
+      name:'home',
+      navigate:'/home'
+    },
+    {
+      name:'Profile',
+      navigate:'/profile'
+    },
+    {
+      name:'Log in',
+      navigate:'/login'
+    },
+    {
+      name:'Register',
+      navigate:'/register'
+    }
+    
+  ]
+
+
+
 }

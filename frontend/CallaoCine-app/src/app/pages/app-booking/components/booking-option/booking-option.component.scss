@@ -1,0 +1,137 @@
+.b-optionCard {
+    height: 50vh;
+    width: 100%;
+    background-color:bisque;
+}
+
+.b-detailCard{
+    background-color:white;
+    box-shadow: 10px 10px 10px #0009;
+    border-radius:0px 0px 10px 10px;
+    text-align: center;
+    font-size:16px;
+    &__img{
+        border-radius: 10px 10px 0px 0px;
+    }
+
+    &__sinopsis{
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 5; /* number of lines to show */
+        -webkit-box-orient: vertical;
+    }
+
+}
+
+@media (min-width: 992px){
+
+    .b-detailCard{
+        border-radius:0px 10px 10px 0px;
+    
+        &__img{
+            border-radius: 10px 0px 0px 10px;
+        }
+        &__sinopsis{
+            overflow: unset;
+            text-overflow: unset;
+            display: -webkit-box;
+            -webkit-line-clamp: unset;
+            -webkit-box-orient: vertical;
+        }
+    
+    }
+
+
+}
+
+
+//checkbox input
+label {
+    width: 100%;
+    font-size: 1rem;
+  }
+  
+  .card-input-element+.card {
+    height: calc(36px + 2*1rem);
+    color: var(--primary);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border: 2px solid transparent;
+    border-radius: 4px;
+  }
+  
+  .card-input-element+.card:hover {
+    cursor: pointer;
+  }
+  
+  .card-input-element:checked+.card {
+    border: 2px solid var(--primary);
+    -webkit-transition: border .3s;
+    -o-transition: border .3s;
+    transition: border .3s;
+  }
+  
+  .card-input-element:checked+.card::after {
+    content: '\e5ca';
+    color: #1d3ce7;
+    font-family: 'Material Icons';
+    font-size: 24px;
+    -webkit-animation-name: fadeInCheckbox;
+    animation-name: fadeInCheckbox;
+    -webkit-animation-duration: .5s;
+    animation-duration: .5s;
+    -webkit-animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  @-webkit-keyframes fadeInCheckbox {
+    from {
+      opacity: 0;
+      -webkit-transform: rotateZ(-20deg);
+    }
+    to {
+      opacity: 1;
+      -webkit-transform: rotateZ(0deg);
+    }
+  }
+  
+  @keyframes fadeInCheckbox {
+    from {
+      opacity: 0;
+      transform: rotateZ(-20deg);
+    }
+    to {
+      opacity: 1;
+      transform: rotateZ(0deg);
+    }
+  }
+
+
+
+//button
+
+a{
+  text-decoration: none;
+}
+
+// $color:#4AD395;
+// $color-hover:#65bf97;
+
+.b-btnCenter{
+  width: 100%;
+  display:block;
+  padding:1rem;
+  margin:10px;
+  background-color:#4AD395;
+  color:#fff;
+  font-weight:600;
+  text-align:center;
+  border-radius:.5rem;
+  transition:.3s;
+    
+    &:hover{
+      background-color:#65bf97;
+      }
+  
+}

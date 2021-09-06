@@ -1,0 +1,56 @@
+<div class="vw-100">
+
+    <div class="container">
+  
+      <div class="row">
+        
+        <div class="col-12 text-center">
+          <p class="mb-0">Seats</p>
+        </div>
+  
+        <div class="col-12 d-flex justify-content-center mt-2 mb-2">
+  
+          <li class="d-flex flex-column align-items-center mr-3 ml-3">
+            <div class="seat"></div>
+            <small>N/A</small>
+          </li>
+  
+          <li class="d-flex flex-column align-items-center mr-3 ml-3">
+            <div class="seat selected"></div>
+            <small>Selected</small>
+          </li>
+  
+          <li class="d-flex flex-column align-items-center mr-3 ml-3">
+            <div class="seat occupied"></div>
+            <small>Ocupied</small>
+          </li>
+  
+        </div>
+  
+        <div class="col-12 d-flex flex-column justify-content-center align-items-center mt-2">
+          <p class="mb-0">Screen</p>
+          <div class="movie-container">
+            <div class="screen"></div>
+          </div>
+        </div>
+
+        <div class="col-12 d-flex flex-column justify-content-center align-items-center"> 
+          <div class="seatRow">
+            <div *ngFor="let seatRow of seatRows" class="d-flex justify-content-center">
+              <div *ngFor="let seat of seatRow" (click)="onSeatClick($event,seat)" id={{seat._id}} [ngClass]="{'occupied' : seat.booked}" class="seat text-center" clickable>{{seat.row}}{{seat.number}}</div>
+            </div>
+
+          </div>
+
+        </div>
+  
+        <div class="col-12 d-flex flex-column justify-content-center align-items-center">
+          <!-- <a class="pay__button">Pay Now!</a> -->
+          <button [disabled]="seatsSelected.length === 0" (click)="buySeats()" class="pay__button">Buy Now!</button> 
+        </div>
+  
+      </div>
+      
+    </div>
+  
+  </div>

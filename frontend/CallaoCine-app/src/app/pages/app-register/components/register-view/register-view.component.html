@@ -1,0 +1,106 @@
+<link
+  href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css"
+  rel="stylesheet"
+/>
+<div class="d-flex justify-content-center align-items-center">
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-12 col-md-6 mt-5">
+
+
+              <div class="b-form">
+
+                <form class="login__create" (ngSubmit)="onSubmitRegister()" [formGroup]="userRegister">
+                  <h1 class="login__title">Create Account</h1>
+                  <fieldset>
+                    <div>
+                      <div class="login__box">
+                        <i class='bx bx-user login__icon'></i>
+                        <input type="text" id="name" formControlName="name" placeholder="Name" class="login__input">
+                      </div>
+                    </div>
+                    <div>
+                      <!-- TODO:ERROR messages -->
+                    </div>
+                  </fieldset>
+                  <fieldset>
+                    <div>
+                      <div class="login__box">
+                        <i class='bx bx-at login__icon'></i>
+                        <input type="text" id="email" formControlName="email" placeholder="Email" class="login__input">
+                      </div>
+                    </div>
+                    <div>
+                      <!-- TODO: ERROR messages -->
+                    </div>
+                  </fieldset>
+                  <fieldset>
+                    <div>
+                      <div class="login__box">
+                        <i class='bx bx-lock login__icon'></i>
+                        <input type="password" id="password" formControlName="password" placeholder="Password" class="login__input">
+                      </div>
+                    </div>
+                    <div>
+                      <!-- TODO: ERROR messages -->
+                    </div>
+                  </fieldset>
+
+                  <button [disabled]="!userRegister.valid" class="d-flex justify-content-center login__button">Sign Up</button>
+
+                  <div>
+                    <span class="login__account login__account--account">Already have an Account? </span>
+                    <a href="/login"class="login__signup login__signup--signup" id="sign-in">Sign In</a>
+                  </div>
+
+                  <div class="login__social">
+                    <a class="login__social--icon"><i class='bx bxl-facebook'></i></a> 
+                    <a class="login__social--icon"><i class='bx bxl-twitter'></i></a> 
+                    <a class="login__social--icon"><i class='bx bxl-google'></i></a>
+                    <a class="login__social--icon"><i class='bx bxl-github'></i></a>
+                 </div>
+
+                </form>
+
+              </div>
+
+
+
+                <!-- <div class="b-form">
+                    <form action="" class="login__create" id="login-up">
+                        <h1 class="login__title">Create Account</h1>
+                        <div class="login__box">
+                          <i class='bx bx-user login__icon'></i>
+                          <input type="text" placeholder="Username" class="login__input">
+                        </div>
+                        
+                        <div class="login__box">
+                          <i class='bx bx-at login__icon'></i>
+                          <input type="text" placeholder="Email" class="login__input">
+                        </div>
+                        
+                        <div class="login__box">
+                          <i class='bx bx-lock login__icon'></i>
+                          <input type="password" placeholder="Password" class="login__input">
+                        </div>
+                        
+                        <a href="#" class="login__button">Sign Up</a>
+                        
+                        <div>
+                          <span class="login__account login__account--account">Already have an Account? </span>
+                          <a href="/login"class="login__signup login__signup--signup" id="sign-in">Sign In</a>
+                        </div>
+                        
+                        <div class="login__social">
+                           <a class="login__social--icon"><i class='bx bxl-facebook'></i></a> 
+                           <a class="login__social--icon"><i class='bx bxl-twitter'></i></a> 
+                           <a class="login__social--icon"><i class='bx bxl-google'></i></a>
+                           <a class="login__social--icon"><i class='bx bxl-github'></i></a>
+                        </div>
+                      </form>
+                </div> -->
+    
+            </div>
+        </div>
+    </div>
+</div>
